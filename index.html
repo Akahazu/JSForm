@@ -21,8 +21,10 @@
       padding: 25px 30px;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      width: 350px;
+      width: 370px;
       border-top: 6px solid #1e90ff;
+      max-height: 95vh;
+      overflow-y: auto;
     }
 
     h2 {
@@ -137,11 +139,43 @@
           <option value="Siti">Siti</option>
           <option value="Agus">Agus</option>
           <option value="Dewi">Jono</option>
-          <option value="Budi">Ratih</option>
-          <option value="Siti">Felix</option>
-          <option value="Agus">Cantika</option>
-          <option value="Dewi">Yanto</option>
+          <option value="Ratih">Ratih</option>
+          <option value="Felix">Felix</option>
+          <option value="Cantika">Cantika</option>
+          <option value="Yanto">Yanto</option>
         </select>
+      </div>
+
+      <div class="form-group">
+        <label for="provinsi">Provinsi</label>
+        <select id="provinsi">
+          <option value="">-- Pilih Provinsi --</option>
+          <option value="Banten">Banten</option>
+          <option value="Jakarta">Jakarta</option>
+          <option value="Jawa Barat">Jawa Barat</option>
+          <option value="Jawa Tengah">Jawa Tengah</option>
+          <option value="Jawa Timur">Jawa Timur</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="kota">Kabupaten / Kota</label>
+        <select id="kota">
+          <option value="">-- Pilih Kota --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="kecamatan">Kecamatan</label>
+        <select id="kecamatan">
+          <option value="">-- Pilih Kecamatan --</option>
+        </select>
+      </div>
+
+      <!-- Output Kode Pos -->
+      <div class="form-group">
+        <label for="kodepos">Kode Pos</label>
+        <input type="text" id="kodepos" readonly />
       </div>
 
       <button type="submit">Submit</button>
@@ -150,32 +184,12 @@
 
   <script>
     const daftarNama = [
-      "Andi Saputra",
-      "Budi Santoso",
-      "Citra Dewi",
-      "Dewi Lestari",
-      "Eko Prasetyo",
-      "Fitri Handayani",
-      "Gilang Pratama",
-      "Hariyanto",
-      "Indah Permata",
-      "Joko Susilo",
-      "Kartika Sari",
-      "Lestari Wulandari",
-      "Made Wirawan",
-      "Nur Aisyah",
-      "Oka Putra",
-      "Putri Ayu",
-      "Qori Rahman",
-      "Rizki Maulana",
-      "Siti Aminah",
-      "Teguh Hidayat",
-      "Utami Larasati",
-      "Vina Marlina",
-      "Wahyu Setiawan",
-      "Xaverius Bintang",
-      "Yuni Safitri",
-      "Zaki Ramadhan"
+      "Andi Saputra","Budi Santoso","Citra Dewi","Dewi Lestari","Eko Prasetyo",
+      "Fitri Handayani","Gilang Pratama","Hariyanto","Indah Permata","Joko Susilo",
+      "Kartika Sari","Lestari Wulandari","Made Wirawan","Nur Aisyah","Oka Putra",
+      "Putri Ayu","Qori Rahman","Rizki Maulana","Siti Aminah","Teguh Hidayat",
+      "Utami Larasati","Vina Marlina","Wahyu Setiawan","Xaverius Bintang",
+      "Yuni Safitri","Zaki Ramadhan"
     ];
 
     function autocomplete(inp, arr) {
@@ -247,18 +261,95 @@
 
     autocomplete(document.getElementById("nama"), daftarNama);
 
+    const dataWilayah = {
+      "Banten": {
+        "Serang": { "Cipocok Jaya": "42121", "Curug": "42171", "Walantaka": "42183" },
+        "Tangerang": { "Ciledug": "15151", "Karawaci": "15113", "Cipondoh": "15148" },
+        "Cilegon": { "Ciwandan": "42441", "Jombang": "42411", "Purwakarta": "42431" }
+      },
+      "Jakarta": {
+        "Jakarta Pusat": { "Menteng": "10310", "Gambir": "10110", "Tanah Abang": "10230" },
+        "Jakarta Barat": { "Palmerah": "11480", "Grogol Petamburan": "11450", "Cengkareng": "11730" },
+        "Jakarta Selatan": { "Kebayoran Baru": "12110", "Pasar Minggu": "12520", "Tebet": "12810" }
+      },
+      "Jawa Barat": {
+        "Bandung": { "Coblong": "40134", "Sukajadi": "40162", "Lengkong": "40261" },
+        "Bogor": { "Bogor Tengah": "16121", "Bogor Selatan": "16131", "Tanah Sareal": "16161" },
+        "Bekasi": { "Bekasi Timur": "17111", "Bekasi Barat": "17131", "Mustika Jaya": "17158" }
+      },
+      "Jawa Tengah": {
+        "Semarang": { "Candisari": "50252", "Pedurungan": "50192", "Banyumanik": "50263" },
+        "Solo": { "Banjarsari": "57137", "Laweyan": "57148", "Jebres": "57126" },
+        "Magelang": { "Magelang Utara": "56111", "Magelang Tengah": "56121", "Magelang Selatan": "56131" }
+      },
+      "Jawa Timur": {
+        "Surabaya": { "Tegalsari": "60262", "Wonokromo": "60243", "Genteng": "60272" },
+        "Malang": { "Klojen": "65111", "Lowokwaru": "65141", "Blimbing": "65126" },
+        "Kediri": { "Kota": "64121", "Mojoroto": "64114", "Pesantren": "64131" }
+      }
+    };
+
+    const provinsiSelect = document.getElementById("provinsi");
+    const kotaSelect = document.getElementById("kota");
+    const kecamatanSelect = document.getElementById("kecamatan");
+    const kodeposInput = document.getElementById("kodepos");
+
+    provinsiSelect.addEventListener("change", function() {
+      kotaSelect.innerHTML = "<option value=''>-- Pilih Kota --</option>";
+      kecamatanSelect.innerHTML = "<option value=''>-- Pilih Kecamatan --</option>";
+      kodeposInput.value = "";
+      const selectedProv = this.value;
+      if (selectedProv && dataWilayah[selectedProv]) {
+        Object.keys(dataWilayah[selectedProv]).forEach(kota => {
+          const opt = document.createElement("option");
+          opt.value = kota;
+          opt.textContent = kota;
+          kotaSelect.appendChild(opt);
+        });
+      }
+    });
+
+    kotaSelect.addEventListener("change", function() {
+      kecamatanSelect.innerHTML = "<option value=''>-- Pilih Kecamatan --</option>";
+      kodeposInput.value = "";
+      const selectedProv = provinsiSelect.value;
+      const selectedKota = this.value;
+      if (selectedProv && selectedKota && dataWilayah[selectedProv][selectedKota]) {
+        Object.keys(dataWilayah[selectedProv][selectedKota]).forEach(kec => {
+          const opt = document.createElement("option");
+          opt.value = kec;
+          opt.textContent = kec;
+          kecamatanSelect.appendChild(opt);
+        });
+      }
+    });
+
+    kecamatanSelect.addEventListener("change", function() {
+      const selectedProv = provinsiSelect.value;
+      const selectedKota = kotaSelect.value;
+      const selectedKec = this.value;
+      if (selectedProv && selectedKota && selectedKec) {
+        kodeposInput.value = dataWilayah[selectedProv][selectedKota][selectedKec];
+      }
+    });
+
     document.getElementById("registrationForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const nama = document.getElementById("nama").value;
       const nim = document.getElementById("nim").value;
       const matkul = document.getElementById("matkul").value;
       const dosen = document.getElementById("dosen").value;
+      const prov = provinsiSelect.value;
+      const kota = kotaSelect.value;
+      const kec = kecamatanSelect.value;
+      const kodepos = kodeposInput.value;
 
-      if (!nama || !nim || !matkul || !dosen) {
+      if (!nama || !nim || !matkul || !dosen || !prov || !kota || !kec || !kodepos) {
         alert("Mohon lengkapi semua data.");
         return;
       }
-      alert(`Data berhasil:\nNama: ${nama}\nNIM: ${nim}\nMata Kuliah: ${matkul}\nDosen: ${dosen}`);
+
+      alert(`Data berhasil:\nNama: ${nama}\nNIM: ${nim}\nMata Kuliah: ${matkul}\nDosen: ${dosen}\nProvinsi: ${prov}\nKota: ${kota}\nKecamatan: ${kec}\nKode Pos: ${kodepos}`);
     });
   </script>
 </body>
